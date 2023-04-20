@@ -19,15 +19,17 @@ var vm = new Vue({
     },
     realTime() {
       if (this.time > 60) {
-        let seconds = this.time - 60;
+        let seconds = (this.time - 60).toFixed(0);
         return (
           (seconds >= 10 ? "1:" : "1:0") +
-          (Math.floor(seconds * Math.pow(10, 1)) / Math.pow(10, 1)).toFixed(1)
+          // (Math.floor(seconds * Math.pow(10, 1)) / Math.pow(10, 1)).toFixed(1)
+          seconds
         );
       } else {
-        return (
-          Math.floor(this.time * Math.pow(10, 1)) / Math.pow(10, 1)
-        ).toFixed(1);
+        // return (
+        //   Math.floor(this.time * Math.pow(10, 1)) / Math.pow(10, 1)
+        // ).toFixed(1);
+        return this.time.toFixed(0);
       }
     },
   },
@@ -37,8 +39,14 @@ var vm = new Vue({
         clearInterval(this.timer);
         this.timer = null;
         this.isWorking = false;
+        if (this.time < 10.5) {
+          this.soundList["sounds_last10"].pause();
+        }
       } else {
         this.startTimer();
+        if (this.time < 10.5) {
+          this.soundList["sounds_last10"].play();
+        }
       }
     },
     start30() {
@@ -71,14 +79,14 @@ var vm = new Vue({
     loadSound() {
       if (!this.soundList || !this.soundList.sounds_last10) {
         // クリックをキーにしてロードしないと再生できない
-        this.soundList.sounds_last10 = new Audio("sounds/10byoumae.mp3");
+        this.soundList.sounds_last10 = new Audio("sounds/10-01.mp3");
         this.soundList.sounds_last30 = new Audio("sounds/30byoumae.mp3");
         this.soundList.sounds_last60 = new Audio("sounds/timer_1punmae_01.mp3");
-        this.soundList.sounds_last1 = new Audio("sounds/num001_01.mp3");
-        this.soundList.sounds_last2 = new Audio("sounds/num002_01.mp3");
-        this.soundList.sounds_last3 = new Audio("sounds/num003_01.mp3");
-        this.soundList.sounds_last4 = new Audio("sounds/num004_01.mp3");
-        this.soundList.sounds_last5 = new Audio("sounds/num005_01.mp3");
+        // this.soundList.sounds_last1 = new Audio("sounds/num001_01.mp3");
+        // this.soundList.sounds_last2 = new Audio("sounds/num002_01.mp3");
+        // this.soundList.sounds_last3 = new Audio("sounds/num003_01.mp3");
+        // this.soundList.sounds_last4 = new Audio("sounds/num004_01.mp3");
+        // this.soundList.sounds_last5 = new Audio("sounds/num005_01.mp3");
         this.soundList.sounds_jikandesu = new Audio("sounds/jikandeesu_01.mp3");
         this.soundList.sounds_sokomade = new Audio("sounds/sokomade_01.mp3");
       }
@@ -86,9 +94,11 @@ var vm = new Vue({
     startTimer() {
       if (!this.timer) {
         this.timer = setInterval(this.countdown, 100, 0.1);
+        // this.timer = setInterval(this.countdown, 1000, 1);
       } else {
         clearInterval(this.timer);
         this.timer = setInterval(this.countdown, 100, 0.1);
+        // this.timer = setInterval(this.countdown, 1000, 1);
       }
       this.isWorking = true;
     },
@@ -102,24 +112,25 @@ var vm = new Vue({
       } else if (roundOffTime == 30.0) {
         console.log("30秒前");
         this.play("sounds_last30");
-      } else if (roundOffTime == 10.0) {
+      } else if (roundOffTime == 10.5) {
+        // 言い始めるのが遅いので
         console.log("10秒前");
         this.play("sounds_last10");
       } else if (roundOffTime == 5.0) {
         console.log("5秒前");
-        this.play("sounds_last5");
+        // this.play("sounds_last5");
       } else if (roundOffTime == 4.0) {
         console.log("4秒前");
-        this.play("sounds_last4");
+        // this.play("sounds_last4");
       } else if (roundOffTime == 3.0) {
         console.log("3秒前");
-        this.play("sounds_last3");
+        // this.play("sounds_last3");
       } else if (roundOffTime == 2.0) {
         console.log("2秒前");
-        this.play("sounds_last2");
+        // this.play("sounds_last2");
       } else if (roundOffTime == 1.0) {
         console.log("1秒前");
-        this.play("sounds_last1");
+        // this.play("sounds_last1");
       } else if (roundOffTime == 0.0) {
         console.log("時間でーす");
         this.play("sounds_jikandesu");
