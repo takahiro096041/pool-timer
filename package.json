@@ -1,0 +1,12 @@
+{
+  "name": "pool-timer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "s3sync:dev": "aws s3 sync dist s3://timer-csi-league-dev/ --delete --acl  public-read",
+    "deploy": "yarn s3sync:dev"
+  },
+  "repository": "git@github.com:takahiro096041/pool-timer.git",
+  "author": "Takahiro Hirata <takahiro096041@gmail.com>",
+  "license": "MIT"
+}

@@ -31,6 +31,7 @@ button {
   border-radius: 10px;
   border-width: 0;
   margin-bottom: 30px;
+  color: black;
 }
 
 [v-cloak] {

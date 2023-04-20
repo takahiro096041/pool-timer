@@ -4,20 +4,10 @@ var vm = new Vue({
     time: 0,
     timer: null,
     isWorking: false,
-    sounds_last10: new Audio("sounds/10byoumae.wav"),
-    sounds_last30: new Audio("sounds/30byoumae.wav"),
-    sounds_last60: new Audio("sounds/timer_1punmae_01.wav"),
-    sounds_last1: new Audio("sounds/num001_01.wav"),
-    sounds_last2: new Audio("sounds/num002_01.wav"),
-    sounds_last3: new Audio("sounds/num003_01.wav"),
-    sounds_last4: new Audio("sounds/num004_01.wav"),
-    sounds_last5: new Audio("sounds/num005_01.wav"),
-    sounds_jikandesu: new Audio("sounds/jikandeesu_01.wav"),
-    // TODO そこまでを採用するのか？？
-    sounds_sokomade: new Audio("sounds/sokomade_01.wav"),
+    soundList: {},
   },
   created() {
-    // 設定値の取得
+    // 設定値の取得する？？
   },
   computed: {
     pause() {
@@ -52,14 +42,17 @@ var vm = new Vue({
       }
     },
     start30() {
+      this.loadSound();
       this.time = 30;
       this.startTimer();
     },
     start1Minute() {
+      this.loadSound();
       this.time = 60;
       this.startTimer();
     },
     start1_5Minute() {
+      this.loadSound();
       this.time = 90;
       this.startTimer();
     },
@@ -74,6 +67,21 @@ var vm = new Vue({
         this.timer = null;
       }
       this.sound();
+    },
+    loadSound() {
+      if (!this.soundList || !this.soundList.sounds_last10) {
+        // クリックをキーにしてロードしないと再生できない
+        this.soundList.sounds_last10 = new Audio("sounds/10byoumae.mp3");
+        this.soundList.sounds_last30 = new Audio("sounds/30byoumae.mp3");
+        this.soundList.sounds_last60 = new Audio("sounds/timer_1punmae_01.mp3");
+        this.soundList.sounds_last1 = new Audio("sounds/num001_01.mp3");
+        this.soundList.sounds_last2 = new Audio("sounds/num002_01.mp3");
+        this.soundList.sounds_last3 = new Audio("sounds/num003_01.mp3");
+        this.soundList.sounds_last4 = new Audio("sounds/num004_01.mp3");
+        this.soundList.sounds_last5 = new Audio("sounds/num005_01.mp3");
+        this.soundList.sounds_jikandesu = new Audio("sounds/jikandeesu_01.mp3");
+        this.soundList.sounds_sokomade = new Audio("sounds/sokomade_01.mp3");
+      }
     },
     startTimer() {
       if (!this.timer) {
@@ -90,41 +98,36 @@ var vm = new Vue({
         Math.floor(this.time * Math.pow(10, 1)) / Math.pow(10, 1);
       if (roundOffTime == 60.0) {
         console.log("60秒前");
-        this.sounds_last60.currentTime = 0;
-        this.sounds_last60.play();
+        this.play("sounds_last60");
       } else if (roundOffTime == 30.0) {
         console.log("30秒前");
-        this.sounds_last30.currentTime = 0;
-        this.sounds_last30.play();
+        this.play("sounds_last30");
       } else if (roundOffTime == 10.0) {
         console.log("10秒前");
-        this.sounds_last10.currentTime = 0;
-        this.sounds_last10.play();
+        this.play("sounds_last10");
       } else if (roundOffTime == 5.0) {
         console.log("5秒前");
-        this.sounds_last5.currentTime = 0;
-        this.sounds_last5.play();
+        this.play("sounds_last5");
       } else if (roundOffTime == 4.0) {
         console.log("4秒前");
-        this.sounds_last4.currentTime = 0;
-        this.sounds_last4.play();
+        this.play("sounds_last4");
       } else if (roundOffTime == 3.0) {
         console.log("3秒前");
-        this.sounds_last3.currentTime = 0;
-        this.sounds_last3.play();
+        this.play("sounds_last3");
       } else if (roundOffTime == 2.0) {
         console.log("2秒前");
-        this.sounds_last2.currentTime = 0;
-        this.sounds_last2.play();
+        this.play("sounds_last2");
       } else if (roundOffTime == 1.0) {
         console.log("1秒前");
-        this.sounds_last1.currentTime = 0;
-        this.sounds_last1.play();
+        this.play("sounds_last1");
       } else if (roundOffTime == 0.0) {
-        console.log("そこまで！");
-        this.sounds_jikandesu.currentTime = 0;
-        this.sounds_jikandesu.play();
+        console.log("時間でーす");
+        this.play("sounds_jikandesu");
       }
+    },
+    play(name) {
+      this.soundList[name].currentTime = 0;
+      this.soundList[name].play();
     },
   },
 });
