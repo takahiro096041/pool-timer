@@ -1,0 +1,38 @@
+body {
+  background-color: black;
+}
+
+.main {
+  margin-top: 30px;
+}
+
+.content {
+  text-align: center;
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 200px;
+}
+
+.time {
+  color: white;
+  font-size: 50px;
+  margin-bottom: 30px;
+}
+
+button {
+  width: 200px;
+  padding: 20px;
+  font-size: 24px;
+  background-color: white;
+  border-radius: 10px;
+  border-width: 0;
+  margin-bottom: 30px;
+}
+
+[v-cloak] {
+  display: none;
+}

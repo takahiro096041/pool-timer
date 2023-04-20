@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>タイマーアプリ</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta name="content-language" content="ja" />
+    <meta name="Description" content="" />
+    <meta name="Keywords" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <script type="text/javascript" async="" src="vue.js"></script>
+    <script type="text/javascript" async="" src="timer.js"></script>
+  </head>
+  <body>
+    <div class="main" v-cloak>
+      <div class="content">
+        <div class="timer">
+          <div class="time">{{realTime}}</div>
+          <button class="time-stop" @click="stopTimer()">{{pause}}</button>
+          <button class="time-thirty" @click="start30()">
+            ショット間<br />30秒
+          </button>
+          <button class="time-one-m" @click="start1Minute()">
+            ブレイク後<br />1分
+          </button>
+          <button class="time-one-half" @click="start1_5Minute()">
+            タイムアウト<br />1分30秒
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
