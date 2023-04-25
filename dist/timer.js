@@ -5,6 +5,8 @@ var vm = new Vue({
     timer: null,
     isWorking: false,
     soundList: {},
+    ext1: false,
+    ext2: false,
   },
   created() {
     // 設定値の取得する？？
@@ -45,7 +47,13 @@ var vm = new Vue({
       } else {
         this.startTimer();
         if (this.time < 10.5) {
-          this.soundList["sounds_last10"].play();
+          // 流れ続けるバグを回避するため
+          if (
+            this.soundList["sounds_last10"].duration >
+            this.soundList["sounds_last10"].currentTime
+          ) {
+            this.soundList["sounds_last10"].play();
+          }
         }
       }
     },
@@ -59,9 +67,20 @@ var vm = new Vue({
       this.time = 60;
       this.startTimer();
     },
-    start1_5Minute() {
-      this.loadSound();
-      this.time = 90;
+    extension1() {
+      this.ext1 = true;
+      if (this.time < 10.5) {
+        this.soundList["sounds_last10"].pause();
+      }
+      this.time += 30;
+      this.startTimer();
+    },
+    extension2() {
+      this.ext2 = true;
+      if (this.time < 10.5) {
+        this.soundList["sounds_last10"].pause();
+      }
+      this.time += 30;
       this.startTimer();
     },
     countdown(diff) {
@@ -116,21 +135,6 @@ var vm = new Vue({
         // 言い始めるのが遅いので
         console.log("10秒前");
         this.play("sounds_last10");
-      } else if (roundOffTime == 5.0) {
-        console.log("5秒前");
-        // this.play("sounds_last5");
-      } else if (roundOffTime == 4.0) {
-        console.log("4秒前");
-        // this.play("sounds_last4");
-      } else if (roundOffTime == 3.0) {
-        console.log("3秒前");
-        // this.play("sounds_last3");
-      } else if (roundOffTime == 2.0) {
-        console.log("2秒前");
-        // this.play("sounds_last2");
-      } else if (roundOffTime == 1.0) {
-        console.log("1秒前");
-        // this.play("sounds_last1");
       } else if (roundOffTime == 0.0) {
         console.log("時間でーす");
         this.play("sounds_jikandesu");
@@ -139,6 +143,11 @@ var vm = new Vue({
     play(name) {
       this.soundList[name].currentTime = 0;
       this.soundList[name].play();
+    },
+    // エクステンションをリセットする
+    reset() {
+      this.ext1 = false;
+      this.ext2 = false;
     },
   },
 });

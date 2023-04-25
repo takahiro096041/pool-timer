@@ -27,9 +27,15 @@
           <button class="time-one-m" @click="start1Minute()">
             ブレイク後<br />1分
           </button>
-          <button class="time-one-half" @click="start1_5Minute()">
-            タイムアウト<br />1分30秒
-          </button>
+          <div class="extension-part">
+            <button class="extension" @click="extension1()" :disabled="ext1">
+              ext1
+            </button>
+            <button class="extension" @click="extension2()" :disabled="ext2">
+              ext2
+            </button>
+          </div>
+          <button class="reset" @click="reset()">extリセット</button>
         </div>
       </div>
     </div>
