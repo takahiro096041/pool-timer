@@ -37,6 +37,7 @@ var vm = new Vue({
   },
   methods: {
     stopTimer() {
+      this.loadSound();
       if (this.timer) {
         clearInterval(this.timer);
         this.timer = null;
@@ -44,6 +45,7 @@ var vm = new Vue({
         if (this.time < 10.5) {
           this.soundList["sounds_last10"].pause();
         }
+        this.play("sounds_stop");
       } else {
         this.startTimer();
         if (this.time < 10.5) {
@@ -61,11 +63,13 @@ var vm = new Vue({
       this.loadSound();
       this.time = 30;
       this.startTimer();
+      this.play("sounds_pipipi");
     },
     start1Minute() {
       this.loadSound();
       this.time = 60;
       this.startTimer();
+      this.play("sounds_pipipi");
     },
     extension1() {
       this.ext1 = true;
@@ -108,6 +112,8 @@ var vm = new Vue({
         // this.soundList.sounds_last5 = new Audio("sounds/num005_01.mp3");
         this.soundList.sounds_jikandesu = new Audio("sounds/jikandeesu_01.mp3");
         this.soundList.sounds_sokomade = new Audio("sounds/sokomade_01.mp3");
+        this.soundList.sounds_stop = new Audio("sounds/stop.mp3");
+        this.soundList.sounds_pipipi = new Audio("sounds/pipipi.mp3");
       }
     },
     startTimer() {
