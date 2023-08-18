@@ -61,12 +61,20 @@ var vm = new Vue({
     },
     start30() {
       this.loadSound();
+      if (this.time < 10.5) {
+        // 流れ続けるバグを回避するため*
+        this.soundList["sounds_last10"].pause();
+      }
       this.time = 30;
       this.startTimer();
       this.play("sounds_pipipi");
     },
     start1Minute() {
       this.loadSound();
+      if (this.time < 10.5) {
+        // 流れ続けるバグを回避するため*
+        this.soundList["sounds_last10"].pause();
+      }
       this.time = 60;
       this.startTimer();
       this.play("sounds_pipipi");
