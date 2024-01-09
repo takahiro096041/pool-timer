@@ -7,6 +7,7 @@ var vm = new Vue({
     soundList: {},
     ext1: false,
     ext2: false,
+    isAfterBreak: false,
   },
   created() {
     // 設定値の取得する？？
@@ -59,17 +60,19 @@ var vm = new Vue({
         }
       }
     },
-    start30() {
+    start40() {
+      this.isAfterBreak = false;
       this.loadSound();
       if (this.time < 10.5) {
         // 流れ続けるバグを回避するため*
         this.soundList["sounds_last10"].pause();
       }
-      this.time = 30;
+      this.time = 40;
       this.startTimer();
       this.play("sounds_pipipi");
     },
     start1Minute() {
+      this.isAfterBreak = true;
       this.loadSound();
       if (this.time < 10.5) {
         // 流れ続けるバグを回避するため*
@@ -81,18 +84,20 @@ var vm = new Vue({
     },
     extension1() {
       this.ext1 = true;
+      this.isAfterBreak = true;
       if (this.time < 10.5) {
         this.soundList["sounds_last10"].pause();
       }
-      this.time += 30;
+      this.time += 40;
       this.startTimer();
     },
     extension2() {
       this.ext2 = true;
+      this.isAfterBreak = true;
       if (this.time < 10.5) {
         this.soundList["sounds_last10"].pause();
       }
-      this.time += 30;
+      this.time += 40;
       this.startTimer();
     },
     countdown(diff) {
@@ -142,7 +147,7 @@ var vm = new Vue({
       if (roundOffTime == 60.0) {
         console.log("60秒前");
         this.play("sounds_last60");
-      } else if (roundOffTime == 30.0) {
+      } else if (roundOffTime == 30.0 && this.isAfterBreak) {
         console.log("30秒前");
         this.play("sounds_last30");
       } else if (roundOffTime == 10.5) {

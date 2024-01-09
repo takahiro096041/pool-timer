@@ -21,12 +21,12 @@
         <div class="timer">
           <div class="time">{{realTime}}</div>
           <button class="time-stop" @click="stopTimer()">{{pause}}</button>
-          <button class="time-thirty" @click="start30()">
-            ショット間<br />30秒
+          <button class="time-thirty" @click="start40()">
+            ショット間<br />40秒
           </button>
-          <button class="time-one-m" @click="start1Minute()">
+          <!-- <button class="time-one-m" @click="start1Minute()">
             ブレイク後<br />1分
-          </button>
+          </button> -->
           <div class="extension-part">
             <button class="extension" @click="extension1()" :disabled="ext1">
               ext1
