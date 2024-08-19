@@ -13,6 +13,7 @@
     />
     <link href="style.css" rel="stylesheet" />
     <script type="text/javascript" defer src="vue.js"></script>
+    <script type="text/javascript" defer src="modal-component.js"></script>
     <script type="text/javascript" defer src="timer.js"></script>
   </head>
   <body>
@@ -22,20 +23,47 @@
           <div class="time">{{realTime}}</div>
           <button class="time-stop" @click="stopTimer()">{{pause}}</button>
           <button class="time-thirty" @click="start40()">
-            ショット間<br />40秒
+            ショット間<br />{{defaultTime}}秒
           </button>
           <!-- <button class="time-one-m" @click="start1Minute()">
             ブレイク後<br />1分
           </button> -->
           <div class="extension-part">
             <button class="extension" @click="extension1()" :disabled="ext1">
-              ext1
+              extension<br />player1
             </button>
             <button class="extension" @click="extension2()" :disabled="ext2">
-              ext2
+              extension<br />player2
             </button>
           </div>
           <button class="reset" @click="reset()">extリセット</button>
+          <button class="setting" @click="openModal()">設定</button>
+          <modal-component :show="showModal" @close="showModal = false">
+            <div class="setting-time">
+              <div class="title">ショット時間の設定</div>
+              <div>
+                <input
+                  type="radio"
+                  id="time40"
+                  value="40"
+                  name="time"
+                  v-model="selectedTime"
+                />
+                <label for="time40">40秒</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="time30"
+                  value="30"
+                  name="time"
+                  v-model="selectedTime"
+                />
+                <label for="time30">30秒</label>
+              </div>
+              <button @click="saveTime()">保存</button>
+            </div>
+          </modal-component>
         </div>
       </div>
     </div>

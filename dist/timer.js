@@ -8,9 +8,13 @@ var vm = new Vue({
     ext1: false,
     ext2: false,
     isAfterBreak: false,
+    showModal: false,
+    selectedTime: "",
+    defaultTime: 40,
   },
   created() {
-    // 設定値の取得する？？
+    const time = localStorage.getItem("setting-time") || "40";
+    this.defaultTime = parseInt(time);
   },
   computed: {
     pause() {
@@ -67,7 +71,7 @@ var vm = new Vue({
         // 流れ続けるバグを回避するため*
         this.soundList["sounds_last10"].pause();
       }
-      this.time = 40;
+      this.time = this.defaultTime;
       this.startTimer();
       this.play("sounds_pipipi");
     },
@@ -88,7 +92,7 @@ var vm = new Vue({
       if (this.time < 10.5) {
         this.soundList["sounds_last10"].pause();
       }
-      this.time += 40;
+      this.time += this.defaultTime;
       this.startTimer();
     },
     extension2() {
@@ -97,7 +101,7 @@ var vm = new Vue({
       if (this.time < 10.5) {
         this.soundList["sounds_last10"].pause();
       }
-      this.time += 40;
+      this.time += this.defaultTime;
       this.startTimer();
     },
     countdown(diff) {
@@ -167,6 +171,15 @@ var vm = new Vue({
     reset() {
       this.ext1 = false;
       this.ext2 = false;
+    },
+    openModal() {
+      this.showModal = true;
+      this.selectedTime = this.defaultTime.toString();
+    },
+    saveTime() {
+      this.showModal = false;
+      localStorage.setItem("setting-time", parseInt(this.selectedTime || "40"));
+      this.defaultTime = parseInt(this.selectedTime || "40");
     },
   },
 });
